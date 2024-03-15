@@ -8,16 +8,16 @@ from urllib.parse import quote_plus
 import unicodedata
 
 def generate_podcast_feed(youtube_channels):
-    feed = feedgen.feed.FeedGenerator()
-    feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
-    feed.title('Mi Podcast de YouTube')
-    feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
-    feed.link(href='https://tu-sitio-web.com', rel='alternate') # Enlace alternativo al feed
-    feed.description('Episodios de mi canal de YouTube convertidos a podcast')
-
     for channel_name, channel_data in youtube_channels.items():
         youtube_channel = channel_data['youtube_channel']
         total_videos = int(channel_data.get('total_videos', 1))
+
+        feed = feedgen.feed.FeedGenerator()
+        feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
+        feed.title('YT-Podcast {channel_name}')
+        feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
+        feed.link(href='https://10.12.12.34:9999', rel='alternate') # Enlace alternativo al feed
+        feed.description('Episodios del canal de YouTube {channel_name} convertidos a podcast')
 
         # Obtener la lista de videos del canal de YouTube
         youtube_dl_command = f'yt-dlp -j --flat-playlist {youtube_channel}'
@@ -58,11 +58,11 @@ def generate_podcast_feed(youtube_channels):
             print(f'Error al ejecutar yt-dlp: {e}')
             sys.exit(1)
 
-    # Guardar el feed en un archivo
-    feed_file = '/data/podcast_feed.xml'
-    feed.rss_file(feed_file)
+        # Guardar el feed en un archivo
+        feed_file = '/data/{channel_name}_feed.xml'
+        feed.rss_file(feed_file)
 
-    print(f'Feed RSS generado en {feed_file}')
+        print(f'Feed RSS generado en {feed_file}')
 
 if __name__ == '__main__':
     config_file = '/data/yt_channels.yaml'
