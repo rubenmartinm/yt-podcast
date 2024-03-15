@@ -5,6 +5,7 @@ import sys
 import yaml
 import re
 from urllib.parse import quote_plus
+import unicodedata
 
 def generate_podcast_feed(youtube_channels):
     feed = feedgen.feed.FeedGenerator()
@@ -27,9 +28,9 @@ def generate_podcast_feed(youtube_channels):
                 video_info = yaml.safe_load(video)
                 video_url = video_info['url']
                 title = video_info['title']
+                # Normalizar y reemplazar caracteres especiales en español
+                title = unicodedata.normalize('NFKD', title).encode('ASCII', 'ignore').decode('ASCII')
                 # Formatear el título para una URL válida
-                # Reemplazar la ñ con una n simple
-                title = title.replace("ñ", "n")
                 title = re.sub(r'\W+', '-', title)  # Reemplaza caracteres no alfanuméricos con guiones
                 title = quote_plus(title)
 
