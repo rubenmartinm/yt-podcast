@@ -1,5 +1,6 @@
 import feedgen.feed
 import os
+import glob
 import subprocess
 import sys
 import yaml
@@ -8,6 +9,14 @@ from urllib.parse import quote_plus
 import unicodedata
 from datetime import datetime, timezone
 
+def cleanup_old_episodes(channel_name, total_videos):
+    channel_dir = f'/data/{channel_name}'
+    files = glob.glob(os.path.join(channel_dir, '*.mp3'))
+    files.sort(key=os.path.getmtime, reverse=True)
+    if len(files) > total_videos:
+        for file in files[total_videos:]:
+            os.remove(file)
+            
 def generate_podcast_feed(youtube_channels):
     for channel_name, channel_data in youtube_channels.items():
         youtube_channel = channel_data['youtube_channel']
@@ -68,6 +77,9 @@ def generate_podcast_feed(youtube_channels):
         feed.rss_file(feed_file)
 
         print(f'Feed RSS generado en {feed_file}')
+
+        # Limpiar episodios antiguos
+        cleanup_old_episodes(channel_name, total_videos)
 
 if __name__ == '__main__':
     config_file = '/data/yt_channels.yaml'
