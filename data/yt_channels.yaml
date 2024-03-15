@@ -1,4 +1,7 @@
 podcasts:
   soymotor:
     youtube_channel: https://www.youtube.com/@SoyMotor
-    total_videos: 3
+    total_videos: 1
+  albertfabrega:
+    youtube_channel: https://www.youtube.com/@AlbertFabrega
+    total_videos: 1

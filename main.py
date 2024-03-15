@@ -14,10 +14,10 @@ def generate_podcast_feed(youtube_channels):
 
         feed = feedgen.feed.FeedGenerator()
         feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
-        feed.title('YT-Podcast {channel_name}')
+        feed.title(f'YT-Podcast {channel_name}')
         feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
         feed.link(href='https://10.12.12.34:9999', rel='alternate') # Enlace alternativo al feed
-        feed.description('Episodios del canal de YouTube {channel_name} convertidos a podcast')
+        feed.description(f'Episodios del canal de YouTube {channel_name} convertidos a podcast')
 
         # Obtener la lista de videos del canal de YouTube
         youtube_dl_command = f'yt-dlp -j --flat-playlist {youtube_channel}'
@@ -59,7 +59,7 @@ def generate_podcast_feed(youtube_channels):
             sys.exit(1)
 
         # Guardar el feed en un archivo
-        feed_file = '/data/{channel_name}_feed.xml'
+        feed_file = f'/data/{channel_name}_feed.xml'
         feed.rss_file(feed_file)
 
         print(f'Feed RSS generado en {feed_file}')
