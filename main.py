@@ -10,6 +10,7 @@ import unicodedata
 def generate_podcast_feed(youtube_channels):
     for channel_name, channel_data in youtube_channels.items():
         youtube_channel = channel_data['youtube_channel']
+        channel_image = channel_data['image']
         total_videos = int(channel_data.get('total_videos', 1))
 
         feed = feedgen.feed.FeedGenerator()
@@ -18,6 +19,7 @@ def generate_podcast_feed(youtube_channels):
         feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
         feed.link(href='https://10.12.12.34:9999', rel='alternate') # Enlace alternativo al feed
         feed.description(f'Episodios del canal de YouTube {channel_name} convertidos a podcast')
+        feed.image(url=f'{channel_image}', title='Channel image', link=f'{channel_image}')
 
         # Obtener la lista de videos del canal de YouTube
         youtube_dl_command = f'yt-dlp -j --flat-playlist {youtube_channel}'

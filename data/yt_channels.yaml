@@ -1,7 +1,13 @@
 podcasts:
   soymotor:
     youtube_channel: https://www.youtube.com/@SoyMotor
+    image: https://yt3.googleusercontent.com/ytc/AIdro_kkXGQLKE1ljjrYrPvdS6WcIhVTRtGcwqHyUEHW0ds=s176-c-k-c0x00ffffff-no-rj
     total_videos: 1
   albertfabrega:
     youtube_channel: https://www.youtube.com/@AlbertFabrega
+    image: https://yt3.googleusercontent.com/ytc/AIdro_k3XEPlvunOr3AAQIfSzZ5pbfj4nWCjVVHACJTkyQ=s176-c-k-c0x00ffffff-no-rj
+    total_videos: 1
+  dotcsv:
+    youtube_channel: https://www.youtube.com/@DotCSV
+    image: https://yt3.googleusercontent.com/YvOquorNYMYPk4N1xIt9cwFj6JHypD-WSXriHnyqlK0wB48ZohYSraWMUhK2T5v6OkHJafB91A=s176-c-k-c0x00ffffff-no-rj
     total_videos: 1
