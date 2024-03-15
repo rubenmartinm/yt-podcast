@@ -10,7 +10,8 @@ import unicodedata
 def generate_podcast_feed(youtube_channels):
     for channel_name, channel_data in youtube_channels.items():
         youtube_channel = channel_data['youtube_channel']
-        channel_image = channel_data['image']
+        channel_image = channel_data['image_url']
+        print(f'Image {channel_image}')
         total_videos = int(channel_data.get('total_videos', 1))
 
         feed = feedgen.feed.FeedGenerator()
