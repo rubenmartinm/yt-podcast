@@ -2,9 +2,11 @@ import feedgen.feed
 import os
 import subprocess
 import sys
-import json
+import yaml
+import re
+from urllib.parse import quote
 
-def generate_podcast_feed(youtube_urls):
+def generate_podcast_feed(youtube_channels):
     feed = feedgen.feed.FeedGenerator()
     feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
     feed.title('Mi Podcast de YouTube')
@@ -12,27 +14,34 @@ def generate_podcast_feed(youtube_urls):
     feed.link(href='https://tu-sitio-web.com', rel='alternate') # Enlace alternativo al feed
     feed.description('Episodios de mi canal de YouTube convertidos a podcast')
 
-    for youtube_url in youtube_urls:
-        # Obtener la lista de los dos últimos videos del canal de YouTube
-        youtube_dl_command = f'yt-dlp -j --flat-playlist {youtube_url}'
+    for channel_name, channel_data in youtube_channels.items():
+        youtube_channel = channel_data['youtube_channel']
+        total_videos = int(channel_data.get('total_videos', 1))
+
+        # Obtener la lista de videos del canal de YouTube
+        youtube_dl_command = f'yt-dlp -j --flat-playlist {youtube_channel}'
         try:
             output = subprocess.check_output(youtube_dl_command, shell=True, text=True)
             videos = output.strip().split('\n')
-            for video in videos[:1]:
-                video_info = json.loads(video)
+            for video in videos[:total_videos]:
+                video_info = yaml.safe_load(video)
                 video_url = video_info['url']
                 title = video_info['title']
-                channel_name = "Soy Motor"
+                # Formatear el título para una URL válida
+                title = re.sub(r'\W+', '-', title)  # Reemplaza caracteres no alfanuméricos con guiones
+                title = quote(title)  # Codifica el título para asegurar que sea una URL válida
+
                 # Crear el directorio del canal si no existe
                 channel_dir = f'/data/{channel_name}'
                 os.makedirs(channel_dir, exist_ok=True)
+
+                # Construir la URL pública del archivo de audio
+                audio_url = f'https://10.12.12.34:9999/{channel_name}/{title}.mp3'
                 audio_file = f'/data/{channel_name}/{title}.mp3'
 
                 # Descargar el audio del video
                 download_command = f'yt-dlp -x --audio-format mp3 --audio-quality 128K -o "{audio_file}" {video_url}'
                 os.system(download_command)
-
-                audio_url = f'https://10.12.12.34:9999/{channel_name}/{title}.mp3'
 
                 # Agregar el episodio al feed
                 fe = feed.add_entry()
@@ -53,9 +62,8 @@ def generate_podcast_feed(youtube_urls):
     print(f'Feed RSS generado en {feed_file}')
 
 if __name__ == '__main__':
-    config_file = '/data/youtube_channels.xml'
+    config_file = '/data/youtube_channels.yaml'
     with open(config_file, 'r') as f:
-        youtube_urls = [line.strip() for line in f.readlines() if line.strip()]
+        youtube_channels = yaml.safe_load(f)
     
-    generate_podcast_feed(youtube_urls)
-
+    generate_podcast_feed(youtube_channels['podcasts'])
