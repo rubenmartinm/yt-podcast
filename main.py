@@ -6,6 +6,7 @@ import yaml
 import re
 from urllib.parse import quote_plus
 import unicodedata
+from datetime import datetime
 
 def generate_podcast_feed(youtube_channels):
     for channel_name, channel_data in youtube_channels.items():
@@ -55,6 +56,7 @@ def generate_podcast_feed(youtube_channels):
                 fe.link(href=video_url)
                 fe.description(title)
                 fe.enclosure(url=audio_url, length='123456', type='audio/mpeg')
+                fe.pubDate(datetime.now())
 
         except subprocess.CalledProcessError as e:
             print(f'Error al ejecutar yt-dlp: {e}')
