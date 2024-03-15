@@ -4,7 +4,7 @@ import subprocess
 import sys
 import yaml
 import re
-from urllib.parse import quote
+from urllib.parse import quote_plus
 
 def generate_podcast_feed(youtube_channels):
     feed = feedgen.feed.FeedGenerator()
@@ -28,15 +28,17 @@ def generate_podcast_feed(youtube_channels):
                 video_url = video_info['url']
                 title = video_info['title']
                 # Formatear el título para una URL válida
+                # Reemplazar la ñ con una n simple
+                title = title.replace("ñ", "n")
                 title = re.sub(r'\W+', '-', title)  # Reemplaza caracteres no alfanuméricos con guiones
-                title = quote(title)  # Codifica el título para asegurar que sea una URL válida
+                title = quote_plus(title)
 
                 # Crear el directorio del canal si no existe
                 channel_dir = f'/data/{channel_name}'
                 os.makedirs(channel_dir, exist_ok=True)
 
                 # Construir la URL pública del archivo de audio
-                audio_url = f'https://10.12.12.34:9999/{channel_name}/{title}.mp3'
+                audio_url = f'http://10.12.12.34:9999/{channel_name}/{title}.mp3'
                 audio_file = f'/data/{channel_name}/{title}.mp3'
 
                 # Descargar el audio del video
@@ -62,7 +64,7 @@ def generate_podcast_feed(youtube_channels):
     print(f'Feed RSS generado en {feed_file}')
 
 if __name__ == '__main__':
-    config_file = '/data/youtube_channels.yaml'
+    config_file = '/data/yt_channels.yaml'
     with open(config_file, 'r') as f:
         youtube_channels = yaml.safe_load(f)
     
