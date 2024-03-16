@@ -40,6 +40,8 @@ def generate_podcast_feed(youtube_channels):
                 video_info = yaml.safe_load(video)
                 video_url = video_info['url']
                 title = video_info['title']
+                upload_date = video_info['upload_date']
+
                 # Normalizar y reemplazar caracteres especiales en español
                 title = unicodedata.normalize('NFKD', title).encode('ASCII', 'ignore').decode('ASCII')
                 # Formatear el título para una URL válida
@@ -65,9 +67,11 @@ def generate_podcast_feed(youtube_channels):
                 fe.link(href=video_url)
                 fe.description(title)
                 fe.enclosure(url=audio_url, length='123456', type='audio/mpeg')
-                pub_date = datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S %z')  # Formato de fecha requerido
-                fe.pubDate(pub_date)
 
+                # Establecer la fecha de publicación del episodio basada en la fecha de publicación del video
+                upload_date_formatted = datetime.strptime(upload_date, '%Y%m%d').replace(tzinfo=timezone.utc)
+                fe.pubDate(upload_date_formatted.strftime('%a, %d %b %Y %H:%M:%S %z'))
+                
         except subprocess.CalledProcessError as e:
             print(f'Error al ejecutar yt-dlp: {e}')
             sys.exit(1)
