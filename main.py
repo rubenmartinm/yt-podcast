@@ -40,7 +40,7 @@ def generate_podcast_feed(youtube_channels):
                 video_info = yaml.safe_load(video)
                 video_url = video_info['url']
                 title = video_info['title']
-                output_date = subprocess.check_output(['yt-dlp', '--get-upload-date', video_url])
+                output_date = subprocess.check_output(['yt-dlp', '--print upload_date', video_url])
                 upload_date = output_date.strip()  # Elimina cualquier espacio en blanco alrededor de la fecha
                 # Formato de fecha devuelto por yt-dlp
                 upload_date_format = '%Y%m%d'
