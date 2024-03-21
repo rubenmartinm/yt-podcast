@@ -30,6 +30,10 @@ def generate_podcast_feed(youtube_channels):
         feed.description(f'Episodios del canal de YouTube {channel_name} convertidos a podcast')
         feed.image(url=f'{channel_image}', title='Channel image', link=f'{channel_image}')
 
+        # Crear el directorio del canal si no existe
+        channel_dir = f'/data/{channel_name}'
+        os.makedirs(channel_dir, exist_ok=True)
+
         ydl_opts = {
             'format': 'bestaudio/best',  # Elige el mejor formato de audio disponible
             'playlistend': total_videos,
