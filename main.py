@@ -42,7 +42,8 @@ def generate_podcast_feed(youtube_channels):
                 'preferredcodec': 'mp3',  # Convierte el audio a MP3
                 'preferredquality': '192'  # Calidad del audio MP3
             }],
-            'outtmpl': f'/data/{channel_name}/%(title)s.mp3',  # Ubicación y nombre del archivo descargado
+            #'outtmpl': f'/data/{channel_name}/%(title)s.mp3',  # Ubicación y nombre del archivo descargado
+            'outtmpl': f'/data/%(title)s.mp3',  # Ubicación y nombre del archivo descargado
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
