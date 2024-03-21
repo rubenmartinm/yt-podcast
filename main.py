@@ -27,7 +27,7 @@ def generate_podcast_feed(youtube_channels):
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',  # Convierte el audio a MP3
                 'preferredquality': '192',  # Calidad del audio MP3
-                'max_downloads': total_videos
+                'playlist_end': total_videos
             }],
             'outtmpl': f'/data/{channel_name}/%(title)s.%(ext)s',  # Ubicación y nombre del archivo descargado
         }
