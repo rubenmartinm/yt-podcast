@@ -1,3 +1,4 @@
+import feedgen.feed
 import yt_dlp
 import os
 import glob
@@ -43,7 +44,7 @@ def generate_podcast_feed(youtube_channels):
         # Construir la URL pública del archivo de audio
         audio_url = f'http://10.12.12.34:9999/{channel_name}/{title}.mp3'
         audio_file = f'/data/{channel_name}/{title}.mp3'
-        
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             try:
                 info_dict = ydl.extract_info(youtube_channel, download=False)
