@@ -21,6 +21,14 @@ def generate_podcast_feed(youtube_channels):
         channel_image = channel_data['image_url']
         total_videos = int(channel_data.get('total_videos', 1))
 
+        feed = feedgen.feed.FeedGenerator()
+        feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
+        feed.title(f'YT-Podcast {channel_name}')
+        feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
+        feed.link(href='https://10.12.12.34:9999', rel='alternate') # Enlace alternativo al feed
+        feed.description(f'Episodios del canal de YouTube {channel_name} convertidos a podcast')
+        feed.image(url=f'{channel_image}', title='Channel image', link=f'{channel_image}')
+
         ydl_opts = {
             'format': 'bestaudio/best',  # Elige el mejor formato de audio disponible
             'playlistend': total_videos,
@@ -32,6 +40,10 @@ def generate_podcast_feed(youtube_channels):
             'outtmpl': f'/data/{channel_name}/%(title)s.%(ext)s',  # Ubicación y nombre del archivo descargado
         }
 
+        # Construir la URL pública del archivo de audio
+        audio_url = f'http://10.12.12.34:9999/{channel_name}/{title}.mp3'
+        audio_file = f'/data/{channel_name}/{title}.mp3'
+        
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             try:
                 info_dict = ydl.extract_info(youtube_channel, download=False)
