@@ -26,15 +26,14 @@ def generate_podcast_feed(youtube_channels):
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',  # Convierte el audio a MP3
-                'preferredquality': '192',  # Calidad del audio MP3
-                'playlistend': total_videos
+                'preferredquality': '192'  # Calidad del audio MP3
             }],
             'outtmpl': f'/data/{channel_name}/%(title)s.%(ext)s',  # Ubicación y nombre del archivo descargado
         }
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             try:
-                info_dict = ydl.extract_info(youtube_channel, download=False)
+                info_dict = ydl.extract_info(youtube_channel, download=False, playlistend=total_videos)
                 videos = info_dict['entries']
                 for video in videos[:total_videos]:
                     video_url = video['url']
