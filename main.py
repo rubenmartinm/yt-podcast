@@ -34,7 +34,7 @@ def generate_podcast_feed(youtube_channels):
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             try:
-                info_dict = ydl.extract_info(youtube_channel, download=False, playlistend=total_videos)
+                info_dict = ydl.extract_info(youtube_channel, download=False)
                 videos = info_dict['entries']
                 for video in videos[:total_videos]:
                     video_url = video['url']
