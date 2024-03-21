@@ -23,6 +23,7 @@ def generate_podcast_feed(youtube_channels):
 
         ydl_opts = {
             'format': 'bestaudio/best',  # Elige el mejor formato de audio disponible
+            'playlistend': total_videos,
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
                 'preferredcodec': 'mp3',  # Convierte el audio a MP3
