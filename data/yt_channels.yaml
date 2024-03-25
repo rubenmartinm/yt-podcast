@@ -15,3 +15,7 @@ podcasts:
     youtube_channel: https://www.youtube.com/@midulive/videos
     image_url: https://yt3.googleusercontent.com/ytc/AIdro_lCQ-IAoYhcXytlGR0SCoD3hgsRe52TyZo3xIci=s176-c-k-c0x00ffffff-no-rj
     total_videos: 2
+  VisualPolitik:
+    youtube_channel: https://youtube.com/@VisualPolitik
+    image_url: https://yt3.googleusercontent.com/p76Kb4e8ee1oy8JQMV_5xwjhmtllYfgZ8BEKhsXk4KtsZ4tx7IUxNmQckeW3YUROaXnpjMha=s176-c-k-c0x00ffffff-no-rj
+    total_videos: 2
