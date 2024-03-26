@@ -32,3 +32,15 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+
+      - name: Publish Docker image to GitHub Packages
+        uses: docker/publish-action@v2
+        with:
+          name: ghcr.io/${{ github.actor }}/${{ github.repository }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT_YT_PODCAST }}
+          repository: ${{ github.actor }}/${{ github.repository }}
+          tag: latest
+          registry: ghcr.io
+          dockerfile: ./Dockerfile
+          target: publish
