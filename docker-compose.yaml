@@ -9,4 +9,10 @@ services:
       - "9999:80"
     volumes:
       - ./podcasts:/usr/share/nginx/html
-
+  yt-podcast:
+    image: ghcr.io/rubenmartinm/yt-podcast:latest
+    container_name: yt-podcast
+    user: "1000:1001"
+    restart: no
+    volumes:
+      - ./config:/data
