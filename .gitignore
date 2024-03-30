@@ -159,5 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-data/*
-!data/yt_channels.yaml
+config/*
+!config/yt_channels_example.yaml
+podcasts/*
+!podcasts/dummy

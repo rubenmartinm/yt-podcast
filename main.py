@@ -18,10 +18,10 @@ def cleanup_old_episodes(channel_name, total_videos):
         for file in files[total_videos:]:
             os.remove(file)
 
-def shorter_than_40_minutes(info, *, incomplete):
-    """Download only videos shorter than 40 minute (or with unknown duration)"""
+def shorter_than_59_minutes(info, *, incomplete):
+    """Download only videos shorter than 59 minute (or with unknown duration)"""
     duration = info.get('duration')
-    if duration and duration > 2400:
+    if duration and duration > 3540:
         return 'The video is too long'
 
 def generate_podcast_feed(youtube_channels):
@@ -46,7 +46,7 @@ def generate_podcast_feed(youtube_channels):
         ydl_opts = {
             'format': 'mp3/bestaudio/best',  # Elige el mejor formato de audio disponible
             'playlistend': total_videos,
-            'match_filter': shorter_than_40_minutes,
+            'match_filter': shorter_than_59_minutes,
             'outtmpl': f'/data/{channel_name}/%(id)s',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',

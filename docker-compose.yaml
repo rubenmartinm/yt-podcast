@@ -8,5 +8,5 @@ services:
     ports:
       - "9999:80"
     volumes:
-      - ./data:/usr/share/nginx/html
+      - ./podcasts:/usr/share/nginx/html
 
