@@ -1,0 +1,9 @@
+podcasts:
+  <PODCAST_1_NAME>:
+    youtube_channel: https://www.youtube.com/<CHANNEL_PODCAST_1>/videos
+    image_url: <IMAGE_URL>
+    total_videos: 2
+  <PODCAST_2_NAME>:
+    youtube_channel: https://www.youtube.com/<CHANNEL_PODCAST_2>/videos
+    image_url: <IMAGE_URL>
+    total_videos: 2

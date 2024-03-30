@@ -160,6 +160,6 @@ cython_debug/
 #.idea/
 
 config/*
-!config/yt_channels_example.yaml
+!config/yt_channels.example.yaml
 podcasts/*
 !podcasts/dummy
