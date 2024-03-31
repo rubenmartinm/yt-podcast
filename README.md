@@ -35,13 +35,18 @@ cd config
 cp yt_channels.example.yaml yt_channels.yaml
 ```
 
-Edit with your values:
+Edit with your values. This can be an example:
 ```yaml
 podcasts:
-  <PODCAST_1_NAME>:
-    youtube_channel: https://www.youtube.com/<CHANNEL_PODCAST_1>/videos # Attention: Please note the /videos
-    image_url: <IMAGE_URL> # You can copy url right clicking in the image
-    total_videos: 2
+  PantomimaFull:
+    youtube_channel: https://www.youtube.com/@PantomimaFull/videos
+    image_url: https://yt3.googleusercontent.com/j3FWuqRMzLhTGBxWnrlhxatpmaTXvFuNM6oYIoIE7iHNoQChlxhz7hi2Wweu3SxRJaUxG1eM=s176-c-k-c0x00ffffff-no-rj
+    total_videos: 1
+```
+
+Back to the main directory:
+```
+cd ..
 ```
 
 ## Running the Web Server
@@ -105,6 +110,13 @@ To configure your podcast client to access the generated RSS feeds, follow these
 5. Save the subscription.
 
 > Note: If accessing the service from outside your home network, you may need to set up a tunnel using WireGuard or another VPN solution to avoid exposing the service directly to the internet.
+
+### Check the Web Server log
+Additionally, you can check the logs to see the if the Podcast Client is reaching your Web Server with:
+```sh
+docker-compose logs nginx -f
+...
+```
 
 ## Pending Improvements
 - Implement a background daemon in the video downloader image to automate the scraping process and download new videos as they become available.
