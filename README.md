@@ -118,6 +118,14 @@ docker-compose logs nginx -f
 ...
 ```
 
+## Stop everything and purge
+You just have to stop the containers and remove the `yt-downloader` directory:
+```sh
+docker-compose down
+cd ..
+rm -r yt-podcast
+```
+
 ## Pending Improvements
 - Implement a background daemon in the video downloader image to automate the scraping process and download new videos as they become available.
 
