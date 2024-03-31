@@ -34,25 +34,24 @@ def generate_podcast_feed(youtube_channels):
         total_videos = int(channel_data.get('total_videos', 1))
 
         feed = feedgen.feed.FeedGenerator()
-        feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # ID único del feed
+        feed.id('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6') # uniq ID for the feed
         feed.title(f'YT-Podcast {channel_name}')
-        feed.author({'name': 'Tu Nombre', 'email': 'tu@email.com'})
+        feed.author({'name': 'YOUR NAME', 'email': 'your@email.com'})
         feed.link(href=f'http://{my_webserver_ip}:{my_webserver_port}', rel='alternate')
-        feed.description(f'Episodios del canal de YouTube {channel_name} convertidos a podcast')
+        feed.description(f'YT {channel_name} videos converted into a podcast')
         feed.image(url=f'{channel_image}', title='Channel image', link=f'{channel_image}')
 
-        # Crear el directorio del canal si no existe
         channel_dir = f'/podcasts/{channel_name}'
         os.makedirs(channel_dir, exist_ok=True)
 
         ydl_opts = {
-            'format': 'mp3/bestaudio/best',  # Elige el mejor formato de audio disponible
+            'format': 'mp3/bestaudio/best', 
             'playlistend': total_videos,
             'match_filter': shorter_than_59_minutes,
             'outtmpl': f'/podcasts/{channel_name}/%(id)s',
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',  # Convierte el audio a MP3
+                'preferredcodec': 'mp3',
             }]
         }
 
@@ -66,9 +65,7 @@ def generate_podcast_feed(youtube_channels):
                     title = video['title']
                     upload_date = datetime.strptime(video['upload_date'], '%Y%m%d')
                     pub_date = upload_date.astimezone(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S %z')
-                    # Construir la URL pública del archivo de audio
                     audio_url = f'http://{my_webserver_ip}:{my_webserver_port}/{channel_name}/{id}.mp3'
-                    # Agregar el episodio al feed
                     fe = feed.add_entry()
                     fe.id(id)
                     fe.title(title)
@@ -78,16 +75,14 @@ def generate_podcast_feed(youtube_channels):
                     fe.pubDate(pub_date)
 
             except yt_dlp.DownloadError as e:
-                print(f'Error al descargar el video: {e}')
+                print(f'Error downloading video: {e}')
                 continue
 
-        # Guardar el feed en un archivo
         feed_file = f'/podcasts/{channel_name}_feed.xml'
         feed.rss_file(feed_file)
 
-        print(f'Feed RSS generado en {feed_file}')
+        print(f'This is your generated RSS feed: http://{my_webserver_ip}:{my_webserver_port}/{channel_name}_feed.xml')
 
-        # Limpiar episodios antiguos
         cleanup_old_episodes(channel_name, total_videos)
 
 if __name__ == '__main__':
