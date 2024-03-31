@@ -17,7 +17,7 @@ cd yt-podcast
 ### 2. Configure your ip and port for the Web Server
 Copy the `.env-example` and add your values:
 ```sh
-❯ cp .env-example .env
+cp .env-example .env
 ```
 
 Edit with your values:
@@ -31,8 +31,8 @@ GID: '1001'
 ### 3. Add some YT Channel
 Copy the `yt_channels.example.yaml` and add your values:
 ```
-❯ cd config
-❯ cp yt_channels.example.yaml yt_channels.yaml
+cd config
+cp yt_channels.example.yaml yt_channels.yaml
 ```
 
 Edit with your values:
@@ -49,14 +49,14 @@ podcasts:
 A web server image is provided to serve the generated RSS feeds and audio files. Run the following command to start the web server:
 
 ``` bash
-❯ docker-compose up nginx -d
+docker-compose up nginx -d
 [+] Running 2/2
  ✔ Network yt-podcast_default  Created                                                                                               0.0s
  ✔ Container nginx             Started                                                                                               0.1s
 ```
 You can check if the container is running with:
 ```sh
-❯ docker-compose ps nginx
+docker-compose ps nginx
 NAME         IMAGE                                    COMMAND                  SERVICE      CREATED        STATUS         PORTS
 nginx        nginx:latest                             "/docker-entrypoint.…"   nginx        28 hours ago   Up 8 minutes   0.0.0.0:9999->80/tcp, :::9999->80/tcp
 ```
@@ -66,28 +66,28 @@ nginx        nginx:latest                             "/docker-entrypoint.…"  
 The video downloader image needs to be executed periodically to download new videos. Use the following command to run the video downloader:
 
 ```sh
-❯ docker-compose up yt-podcast -d
+docker-compose up yt-podcast -d
 [+] Running 1/1
  ✔ Container yt-podcast  Started                                                                                                     0.0s
 ```
 
 You can check if the container is running with:
 ```sh
-❯ docker-compose ps yt-podcast
+docker-compose ps yt-podcast
 NAME         IMAGE                                    COMMAND            SERVICE      CREATED              STATUS              PORTS
 yt-podcast   ghcr.io/rubenmartinm/yt-podcast:latest   "python main.py"   yt-podcast   About a minute ago   Up About a minute
 ```
 
 Additionally, you can check the execution with:
 ```sh
-❯ docker-compose logs yt-podcast -f
+docker-compose logs yt-podcast -f
 ...
 ```
 
 ## Prepare everything for scheduling the automatic video download execution
 To schedule execution of the downloader you can use like this:
 ```sh
-❯ EDITOR=vi crontab -e
+EDITOR=vi crontab -e
 # YT-Podcast
 # This will execute everyday at 06:00 and 18:00
 # You can use https://crontab.guru to create a valid expression
