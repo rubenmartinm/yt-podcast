@@ -1,5 +1,5 @@
 # yt-podcast
-Podcast generator
+Podcast generator from YT channels
 
 ## Objective
 The objective of this project is to create a podcast feed generator from YT channels. It automatically downloads videos from specified channels, converts them into audio files, and generates an RSS feed for podcast distribution.
